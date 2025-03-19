@@ -1,0 +1,32 @@
+/* Navbar Styling */
+.navbar {
+    background-color: black; /* Black Strip */
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+  }
+  
+  /* DoctorHunt Title */
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  /* Login Links */
+  .nav-links {
+    display: flex;
+    gap: 20px; /* Adds spacing between links */
+  }
+  
+  .nav-item {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  
+  .nav-item:hover {
+    text-decoration: underline; /* Underline on hover */
+  }
