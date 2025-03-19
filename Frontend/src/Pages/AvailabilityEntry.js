@@ -14,15 +14,17 @@ const AvailabilityEntry = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const doctorId = localStorage.getItem("doctor_id"); // Retrieve doctor ID
+    // Retrieve doctor_id from localStorage
+    const doctorId = localStorage.getItem("doctor_id"); 
     if (!doctorId) {
       alert("Doctor not logged in");
       navigate("/doctor-login"); // Redirect to doctor login page if not logged in
       return;
     }
 
+    // Prepare the data to be sent to the backend
     const availabilityData = {
-      doctor_id: doctorId, // Include doctor_id in the request data
+      doctor_id: doctorId, // Include doctor_id from localStorage
       location_name: locationName,
       address,
       available_date: availableDate,

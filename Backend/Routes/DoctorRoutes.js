@@ -8,7 +8,7 @@ router.post("/login", async (req, res) => {
 
   try {
     // Query for the correct column name 'mobile_no' instead of 'phone'
-    const query = "SELECT * FROM doctor_login WHERE mobile_no = ?";
+    const query = "SELECT * FROM doctor_login WHERE mobile_no= ?";
     const [results] = await db.promise().query(query, [phone]);
 
     if (results.length === 0) {
