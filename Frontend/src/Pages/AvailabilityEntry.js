@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"; // Import Axios for API calls
 import "./AvailabilityEntry.css"; // Ensure you have the CSS file for styling
 
 const AvailabilityEntry = () => {
+  const [doctorId, setDoctorId] = useState(""); // New state for doctor_id input
   const [locationName, setLocationName] = useState("");
   const [address, setAddress] = useState("");
   const [startTime, setStartTime] = useState("");
@@ -14,17 +15,15 @@ const AvailabilityEntry = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Retrieve doctor_id from localStorage
-    const doctorId = localStorage.getItem("doctor_id"); 
+    // Validate doctorId to make sure it's provided
     if (!doctorId) {
-      alert("Doctor not logged in");
-      navigate("/doctor-login"); // Redirect to doctor login page if not logged in
+      alert("Please enter your Doctor ID");
       return;
     }
 
     // Prepare the data to be sent to the backend
     const availabilityData = {
-      doctor_id: doctorId, // Include doctor_id from localStorage
+      doctor_id: doctorId, // Use the input from the doctor
       location_name: locationName,
       address,
       available_date: availableDate,
@@ -41,6 +40,7 @@ const AvailabilityEntry = () => {
       if (response.data.success) {
         alert("Availability successfully added!");
         // After saving, reset inputs
+        setDoctorId(""); // Reset doctor_id input
         setLocationName("");
         setAddress("");
         setStartTime("");
@@ -58,7 +58,6 @@ const AvailabilityEntry = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("doctor_id"); // Remove doctor_id from localStorage
     navigate("/"); // Navigate to the home page
   };
 
@@ -67,6 +66,15 @@ const AvailabilityEntry = () => {
       <div className="availability-box">
         <h2>Set Your Availability</h2>
         <form onSubmit={handleSubmit}>
+          {/* Doctor ID Input */}
+          <input
+            type="text"
+            placeholder="Enter Doctor ID"
+            value={doctorId}
+            onChange={(e) => setDoctorId(e.target.value)}
+            required
+          />
+
           {/* Location Name Dropdown */}
           <select
             value={locationName}

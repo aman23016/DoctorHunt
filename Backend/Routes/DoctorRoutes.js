@@ -1,14 +1,13 @@
 const express = require("express");
 const db = require("../Config/db");  // Database connection
-const router = express.Router();
+const router = express.Router(); // Initialize router
 
 // Doctor login route
 router.post("/login", async (req, res) => {
   const { phone, password } = req.body;
 
   try {
-    // Query for the correct column name 'mobile_no' instead of 'phone'
-    const query = "SELECT * FROM doctor_login WHERE mobile_no= ?";
+    const query = "SELECT * FROM doctor_login WHERE mobile_no = ?";
     const [results] = await db.promise().query(query, [phone]);
 
     if (results.length === 0) {
@@ -22,6 +21,8 @@ router.post("/login", async (req, res) => {
       return res.json({
         success: true,
         message: "Login successful",
+        doctor_id: user.id,  // Send doctor_id
+        doctor_name: user.name,  // Send doctor_name
       });
     } else {
       return res.status(400).json({ success: false, message: "Invalid phone number or password" });
@@ -32,4 +33,4 @@ router.post("/login", async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = router;  // Export the router to use it in server.js
