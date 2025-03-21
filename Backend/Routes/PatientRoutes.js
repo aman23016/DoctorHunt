@@ -9,6 +9,8 @@ router.post("/signup", async (req, res) => {
 
   // Log the received data
   console.log("Signup request received with data:", req.body);
+  console.log("Request received at /api/patients/login");
+
 
   // Check if phone number already exists
   const checkQuery = "SELECT * FROM patients WHERE phone = ?";
@@ -27,7 +29,7 @@ router.post("/signup", async (req, res) => {
     const insertQuery = "INSERT INTO patients (name, age, phone, password) VALUES (?, ?, ?, ?)";
     const [result] = await db.promise().query(insertQuery, [name, age, phone, hashedPassword]);
     console.log("Patient inserted:", result);
-
+    
     res.json({ success: true, message: "Signup successful" });
   } catch (err) {
     console.error("Signup failed", err);
@@ -35,7 +37,6 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-// ✅ Patient Login API
 router.post("/login", async (req, res) => {
   const { phone, password } = req.body;
 
@@ -46,21 +47,27 @@ router.post("/login", async (req, res) => {
   const query = "SELECT * FROM patients WHERE phone = ?";
   try {
     const [results] = await db.promise().query(query, [phone]);
-    console.log("Query result:", results);
+    console.log("Query result:", results); // Log the query result
 
     if (results.length === 0) {
+      console.log("No user found with the given phone number.");
       return res.status(400).json({ success: false, message: "Invalid phone number or password" });
     }
 
     const user = results[0];
 
+    // Log user data before comparing password
+    console.log("User found:", user);
+
     // Compare entered password with stored hashed password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
+      console.log("Password does not match.");
       return res.status(400).json({ success: false, message: "Invalid phone number or password" });
     }
 
     // If login is successful, send success response with user info
+    console.log("Login successful for user:", user.name);
     res.json({
       success: true,
       message: "Login successful",
@@ -68,7 +75,7 @@ router.post("/login", async (req, res) => {
       patient_name: user.name,  // Send patient name in response
     });
   } catch (err) {
-    console.error("Login failed", err);
+    console.error("Login failed:", err);
     return res.status(500).json({ success: false, message: "Internal server error", error: err.message });
   }
 });
