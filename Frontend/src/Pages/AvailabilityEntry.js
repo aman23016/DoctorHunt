@@ -82,11 +82,31 @@ const AvailabilityEntry = () => {
             required
           >
             <option value="">Select Metro Station</option>
-            <option value="Govindpuri">Govindpuri</option>
-            <option value="Nehru Place">Nehru Place</option>
-            <option value="Central Secretariat">Central Secretariat</option>
             <option value="Kashmere Gate">Kashmere Gate</option>
-            <option value="Patel Chowk">Patel Chowk</option>
+            <option value="Lal Quila">Lal Quila</option>
+            <option value="Jama Masjid">Jama Masjid</option>
+            <option value="Delhi Gate">Delhi Gate</option>
+            <option value="ITO">ITO</option>
+            <option value="Mandi House">Mandi House</option>
+            <option value="Janpath">Janpath</option>
+            <option value="Central Secretariat">Central Secretariat</option>
+            <option value="Khan Market">Khan Market</option>
+            <option value="Jawaharlal Nehru Stadium">Jawaharlal Nehru Stadium</option>
+            <option value="Jangpura">Jangpura</option>
+            <option value="Lajpat Nagar">Lajpat Nagar</option>
+            <option value="Moolchand">Moolchand</option>
+            <option value="Kailash Colony">Kailash Colony</option>
+            <option value="Nehru Place">Nehru Place</option>
+            <option value="Kalkaji Mandir">Kalkaji Mandir</option>
+            <option value="Govind Puri">Govind Puri</option>
+            <option value="Okhla">Okhla</option>
+            <option value="Jasola">Jasola</option>
+            <option value="Sarita Vihar">Sarita Vihar</option>
+            <option value="Mohan Estate">Mohan Estate</option>
+            <option value="Tughlakabad">Tughlakabad</option>
+            <option value="Badarpur Border">Badarpur Border</option>
+            <option value="Sarai">Sarai</option>
+            <option value="N.H.P.C. Chowk">N.H.P.C. Chowk</option>
           </select>
 
           {/* Other form fields */}

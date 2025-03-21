@@ -1,3 +1,30 @@
+// // const express = require("express");
+// // const cors = require("cors");
+// // const doctorRoutes = require("./Routes/DoctorRoutes");  // Ensure correct path
+// // const availabilityRoutes = require("./Routes/AvailabilityRoutes");  // Ensure correct path
+// // const patientRoutes = require("./Routes/PatientRoutes");  // Ensure correct path for patient routes
+
+// // const app = express();
+
+// // // Middleware to parse JSON bodies (express.json is built into Express, no need for body-parser)
+// // app.use(express.json());
+
+// // // Enable CORS for all origins (or you can configure it as needed)
+// // app.use(cors());
+
+// // // Register routes for doctor-related endpoints
+// // app.use("/api/doctors", doctorRoutes);  // Register doctor routes
+
+// // // Register routes for availability-related endpoints
+// // app.use("/api/doctors", availabilityRoutes);  // Register availability routes
+
+// // // Register routes for patient-related endpoints
+// // app.use("/api/patients", patientRoutes);  // Register patient routes
+
+// // // Start server
+// // app.listen(5000, () => {
+// //   console.log("Server running on port 5000");
+// // });
 // const express = require("express");
 // const cors = require("cors");
 // const doctorRoutes = require("./Routes/DoctorRoutes");  // Ensure correct path
@@ -16,7 +43,7 @@
 // app.use("/api/doctors", doctorRoutes);  // Register doctor routes
 
 // // Register routes for availability-related endpoints
-// app.use("/api/doctors", availabilityRoutes);  // Register availability routes
+// app.use("/api/availability", availabilityRoutes);  // Register availability routes under a separate path
 
 // // Register routes for patient-related endpoints
 // app.use("/api/patients", patientRoutes);  // Register patient routes
@@ -27,26 +54,24 @@
 // });
 const express = require("express");
 const cors = require("cors");
-const doctorRoutes = require("./Routes/DoctorRoutes");  // Ensure correct path
-const availabilityRoutes = require("./Routes/AvailabilityRoutes");  // Ensure correct path
-const patientRoutes = require("./Routes/PatientRoutes");  // Ensure correct path for patient routes
+const doctorRoutes = require("./Routes/DoctorRoutes");
+const availabilityRoutes = require("./Routes/AvailabilityRoutes");
+const patientRoutes = require("./Routes/PatientRoutes");
+const searchResultsRoutes = require("./Routes/SearchResultsRoute");  // Import the new route
 
 const app = express();
 
-// Middleware to parse JSON bodies (express.json is built into Express, no need for body-parser)
+// Middleware to parse JSON bodies
 app.use(express.json());
 
-// Enable CORS for all origins (or you can configure it as needed)
+// Enable CORS
 app.use(cors());
 
-// Register routes for doctor-related endpoints
-app.use("/api/doctors", doctorRoutes);  // Register doctor routes
-
-// Register routes for availability-related endpoints
-app.use("/api/availability", availabilityRoutes);  // Register availability routes under a separate path
-
-// Register routes for patient-related endpoints
-app.use("/api/patients", patientRoutes);  // Register patient routes
+// Register routes
+app.use("/api/doctors", doctorRoutes);
+app.use("/api/doctors", availabilityRoutes);
+app.use("/api/patients", patientRoutes);
+app.use("/api/search", searchResultsRoutes);  // Register the search route
 
 // Start server
 app.listen(5000, () => {
