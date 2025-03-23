@@ -1,3 +1,4 @@
+
 const express = require('express');
 const db = require('../Config/db');  // Your DB connection
 const router = express.Router();  // This is where the router is defined
@@ -27,7 +28,7 @@ router.post("/search", async (req, res) => {
 
     // Step 2: Fetch doctors based on location (using 4 nearest metro stations) and specialization
     const doctorQuery = `
-      SELECT da.*, dl.name AS doctor_name, dl.specialization, dl.consultation_fees, dl.contact_details
+      SELECT da.*, dl.id AS doctor_id, dl.name AS doctor_name, dl.specialization, dl.consultation_fees, dl.contact_details
       FROM doctor_availability da
       JOIN doctor_login dl ON da.doctor_id = dl.id
       WHERE da.location_name IN (?, ?, ?, ?) 
@@ -51,7 +52,7 @@ router.post("/search", async (req, res) => {
     const doctorsWithDistance = doctorResults.map((doctor) => {
       const remainingSlots = doctor.available_slots ? doctor.available_slots : "N/A"; // Get remaining slots, or "N/A" if not available
       return {
-        doctor_id: doctor.doctor_id,
+        doctor_id: doctor.doctor_id,  // Added doctor_id here
         doctor_name: doctor.doctor_name,
         specialization: doctor.specialization,
         consultation_fees: doctor.consultation_fees,
