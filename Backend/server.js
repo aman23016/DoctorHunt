@@ -5,7 +5,8 @@ const doctorRoutes = require("./Routes/DoctorRoutes");
 const availabilityRoutes = require("./Routes/AvailabilityRoutes");
 const patientRoutes = require("./Routes/PatientRoutes");
 const searchResultsRoutes = require("./Routes/SearchResultsRoute");
-const bookingRoutes = require("./Routes/BookingRoute");  // Import the booking route
+const bookingRoutes = require("./Routes/BookingRoute");
+const availabilityCheckRoutes = require("./Routes/AvailabilityCheckRoutes");  // Import the check bookings route
 
 const app = express();
 
@@ -20,7 +21,8 @@ app.use("/api/doctors", doctorRoutes);
 app.use("/api/doctors", availabilityRoutes);
 app.use("/api/patients", patientRoutes);
 app.use("/api/search", searchResultsRoutes);
-app.use("/api/booking", bookingRoutes);  // Register the booking route
+app.use("/api/booking", bookingRoutes);
+app.use("/api", availabilityCheckRoutes);  // Register the availability check route
 
 // Start server
 app.listen(5000, () => {

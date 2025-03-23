@@ -61,6 +61,10 @@ const AvailabilityEntry = () => {
     navigate("/"); // Navigate to the home page
   };
 
+  const handleCheckBookings = () => {
+    navigate("/check-bookings"); // Navigate to CheckBookings page
+  };
+
   return (
     <div className="availability-entry-container">
       <div className="availability-box">
@@ -108,7 +112,7 @@ const AvailabilityEntry = () => {
             <option value="Sarai">Sarai</option>
             <option value="N.H.P.C. Chowk">N.H.P.C. Chowk</option>
           </select>
-
+        
           {/* Other form fields */}
           <input
             type="text"
@@ -161,6 +165,24 @@ const AvailabilityEntry = () => {
           }}
         >
           Logout
+        </button>
+
+        {/* Check Bookings Link */}
+        <button
+          onClick={handleCheckBookings}
+          style={{
+            marginTop: "10px",
+            padding: "10px",
+            backgroundColor: "#007bff", // Blue color for Check Bookings button
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            fontSize: "16px",
+            cursor: "pointer",
+            width: "100%",
+          }}
+        >
+          Check Bookings
         </button>
       </div>
     </div>

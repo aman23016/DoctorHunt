@@ -8,6 +8,7 @@ import PatientSignup from "./Pages/PatientSignup";
 import DoctorSearch from "./Pages/DoctorSearch";
 import AvailabilityEntry from "./Pages/AvailabilityEntry"; // Import AvailabilityEntry page
 import SearchResults from "./Pages/SearchResults"; // Import SearchResults page
+import CheckBookings from "./Pages/CheckBookings"; // Import the CheckBookings page
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
         <Route path="/patient-signup" element={<PatientSignup />} />
         <Route path="/doctor-search" element={<DoctorSearch />} />
         <Route path="/availability-entry" element={<AvailabilityEntry />} />
-        <Route path="/search-results" element={<SearchResults />} /> {/* Add route for SearchResults */}
+        <Route path="/search-results" element={<SearchResults />} />
+        <Route path="/check-bookings" element={<CheckBookings />} /> {/* Corrected route */}
       </Routes>
     </BrowserRouter>
   );

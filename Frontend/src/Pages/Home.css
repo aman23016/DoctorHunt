@@ -1,0 +1,113 @@
+body {
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .bg-cover {
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .feature-box {
+    background-color: rgba(255, 255, 255, 0.8); /* Slight white background with opacity */
+    border-radius: 15px;
+    padding: 40px;
+    width: 500px; /* Increased width for larger boxes */
+    height: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-out;
+    transition: transform 0.3s ease;
+    margin: 20px; /* Margin between the boxes */
+  }
+  
+  .feature-box:hover {
+    transform: scale(1.05); /* Slight scaling effect on hover */
+  }
+  
+  .feature-box h3 {
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: bold; /* Make the header bold */
+  }
+  
+  .feature-box ul {
+    padding-left: 20px;
+    font-size: 18px; /* Increase font size */
+    line-height: 1.8; /* Increased line height for better readability */
+  }
+  
+  .feature-box ul li {
+    margin-bottom: 15px; /* Add space between points */
+  }
+  
+  h2 {
+    color: coral;
+    font-size: 3rem;
+    font-weight: 700;
+  }
+  
+  .flex {
+    display: flex;
+  }
+  
+  .items-center {
+    align-items: center;
+  }
+  
+  .justify-center {
+    justify-content: center;
+  }
+  
+  .space-x-10 > * {
+    margin-right: 20px;
+  }
+  
+  .text-white {
+    color: white;
+  }
+  
+  .text-left {
+    text-align: left;
+  }
+  
+  .login-button {
+    background-color: black; /* Black background color for the button */
+    color: white; /* White text color */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 100%;
+  }
+  
+  .login-button:hover {
+    background-color: #333; /* Darken the button color on hover */
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .flex {
+      flex-direction: column;
+    }
+  
+    .space-x-10 > * {
+      margin-right: 0;
+      margin-bottom: 20px;
+    }
+  }
+  

@@ -1,18 +1,17 @@
+
 import React from "react";
-import { Link } from "react-router-dom";
 import "./Navbar.css"; // Import the CSS file
 
 const Navbar = () => {
   return (
     <nav className="navbar">
-      <h1 className="logo">DoctorHunt</h1>
-      <div className="nav-links">
-        <Link to="/doctor-login" className="nav-item">
-          Doctor Login
-        </Link>
-        <Link to="/patient-login" className="nav-item">
-          Patient Login
-        </Link>
+      {/* Logo */}
+      <div className="logo">
+        <img src="/Logo.avif" alt="DoctorHunt Logo" style={{ height: "65px" }} />
+      </div>
+      {/* Heading Text */}
+      <div className="navbar-heading">
+        <h1 style={{ color: "white", fontSize: "2rem" }}>Welcome to DoctorHunt</h1>
       </div>
     </nav>
   );
