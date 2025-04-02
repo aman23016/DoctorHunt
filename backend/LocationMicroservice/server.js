@@ -4,11 +4,11 @@ const bodyParser = require("body-parser");
 const app = express();
 
 // Import Routes
-const searchResultsRoute = require("./routes/SearchResultsRoute");
+const searchResultsRoute = require("./routes/SearchRoute.js");
 const bookingRoute = require("./routes/BookingRoute");  // Import BookingRoute
 
 // Middleware
-app.use(cors());  // Enable CORS for all routes
+app.use(cors());  // Enable CORS for all rosutes
 app.use(bodyParser.json());  // Parse incoming JSON requests
 
 // Routes
