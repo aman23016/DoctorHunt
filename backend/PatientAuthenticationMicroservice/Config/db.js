@@ -2,9 +2,9 @@ const mysql = require("mysql2");
 
 // Create a connection to the database with promise support
 const db = mysql.createConnection({
-    host: "localhost",
+    host: "db", // Use the service name from docker-compose (it refers to the MySQL container)
     user: "root",
-    password: "yourpassword", // Replace with your MySQL password
+    password: "yourpassword", // Make sure to set this in docker-compose.yml
     database: "doctorhunt"
 });
 

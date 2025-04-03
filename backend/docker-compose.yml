@@ -1,0 +1,69 @@
+version: '3'
+services:
+  doctor-authentication:
+    build: ./DoctorAuthenticationMicroservice
+    ports:
+      - "5001:5001"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=yourpassword
+      - DB_NAME=doctorhunt
+    depends_on:
+      - db
+
+  patient-authentication:
+    build: ./PatientAuthenticationMicroservice
+    ports:
+      - "5004:5004"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=yourpassword
+      - DB_NAME=doctorhunt
+    depends_on:
+      - db
+
+  appointment-management:
+    build: ./AppointmentManagementMicroservice
+    ports:
+      - "5003:5003"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=yourpassword
+      - DB_NAME=doctorhunt
+    depends_on:
+      - db
+
+  location:
+    build: ./LocationMicroservice
+    ports:
+      - "5002"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=yourpassword
+      - DB_NAME=doctorhunt
+    depends_on:
+      - db
+    deploy:
+      replicas: 4  # This scales the location microservice to 4 replicas
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: yourpassword
+      MYSQL_DATABASE: doctorhunt
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
+
+
+##command to run the docker-compose.yml file: docker-compose up --build --scale location=4 -d
+##this is runnig the docker-compose file in detached mode and scaling the location microservice to 4 replicas
+
