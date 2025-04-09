@@ -16,13 +16,21 @@ const DoctorLogin = () => {
       return;
     }
 
-    try {
+    // try {
      
-      const response = await axios.post("http://localhost:5001/api/doctor/login", {
-        phone,
-        password
-      });
-
+    //   const response = await axios.post("http://localhost:5001/api/doctor/login", {
+    //     phone,
+    //     password
+    //   });
+    try {
+      const response = await axios.post(
+        "http://34.60.223.171/api/doctor/login",  // Replaced with the external IP
+        {
+          phone,
+          password
+        }
+      );
+    
       // If login is successful, store doctor details in localStorage and navigate
       if (response.data.success) {
         const { doctor_id, doctor_name } = response.data;

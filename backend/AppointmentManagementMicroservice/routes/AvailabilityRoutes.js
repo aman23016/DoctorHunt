@@ -22,7 +22,7 @@ router.post("/availability", async (req, res) => {
     `;
     
     // Execute the query with the data from the request body
-    const [result] = await db.promise().query(query, [doctor_id, location_name, address, available_date, start_time, available_slots]);
+    const [result] = await db.query(query, [doctor_id, location_name, address, available_date, start_time, available_slots]);
 
     // If insertion is successful, return success response
     console.log("Inserted availability with ID:", result.insertId);

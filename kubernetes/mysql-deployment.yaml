@@ -1,0 +1,56 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: mysql
+# spec:
+#   replicas: 1  # Number of MySQL instances (can be scaled)
+#   selector:
+#     matchLabels:
+#       app: mysql
+#   template:
+#     metadata:
+#       labels:
+#         app: mysql  # Ensure this matches the selector in the Service
+#     spec:
+#       containers:
+#         - name: mysql
+#           image: mysql:5.7
+#           env:
+#             - name: MYSQL_ROOT_PASSWORD
+#               value: "yourpassword"  # Hardcoded password
+#             - name: MYSQL_DATABASE
+#               value: "doctorhunt"  # Database name
+#           ports:
+#             - containerPort: 3306
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  replicas: 1  # Number of MySQL instances (can be scaled)
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql  # Ensure this matches the selector in the Service
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:5.7
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "yourpassword"  # Hardcoded password
+            - name: MYSQL_DATABASE
+              value: "doctorhunt"  # Database name
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: mysql-config
+              mountPath: /etc/mysql/my.cnf
+              subPath: my.cnf  # Ensures that only the my.cnf file is mounted
+      volumes:
+        - name: mysql-config
+          configMap:
+            name: mysql-config  # This should match the name of your ConfigMap

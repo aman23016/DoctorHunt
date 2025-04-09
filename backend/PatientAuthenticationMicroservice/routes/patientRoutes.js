@@ -15,7 +15,7 @@ router.post("/signup", async (req, res) => {
   // Check if phone number already exists
   const checkQuery = "SELECT * FROM patients WHERE phone = ?";
   try {
-    const [checkResults] = await db.promise().query(checkQuery, [phone]);
+    const [checkResults] = await db.query(checkQuery, [phone]);
     console.log("Check if phone exists:", checkResults);
 
     if (checkResults.length > 0) {
@@ -27,7 +27,7 @@ router.post("/signup", async (req, res) => {
 
     // Insert new patient into the database
     const insertQuery = "INSERT INTO patients (name, age, phone, password) VALUES (?, ?, ?, ?)";
-    const [result] = await db.promise().query(insertQuery, [name, age, phone, hashedPassword]);
+    const [result] = await db.query(insertQuery, [name, age, phone, hashedPassword]);
     console.log("Patient inserted:", result);
     
     res.json({ success: true, message: "Signup successful" });
@@ -46,7 +46,7 @@ router.post("/login", async (req, res) => {
   // Check if phone number exists
   const query = "SELECT * FROM patients WHERE phone = ?";
   try {
-    const [results] = await db.promise().query(query, [phone]);
+    const [results] = await db.query(query, [phone]);
     console.log("Query result:", results); // Log the query result
 
     if (results.length === 0) {

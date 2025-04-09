@@ -14,10 +14,15 @@ const CheckBookings = () => {
       alert("Please enter Doctor ID");
       return;
     }
+    // try {
+    //   const response = await axios.post("http://localhost:5003/api/check-bookings", {
+    //     doctor_id: doctorId,
+    //   });
     try {
-      const response = await axios.post("http://localhost:5003/api/check-bookings", {
-        doctor_id: doctorId,
-      });
+      const response = await axios.post(
+        "http://34.45.68.234/api/check-bookings",  // Replaced with the external IP
+        { doctor_id: doctorId }
+      );
 
       if (response.data.success) {
         if (response.data.bookings.length === 0) {

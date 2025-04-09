@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -10,12 +9,12 @@ const SearchResults = () => {
   const navigate = useNavigate();
 
   const fetchDoctors = useCallback(async () => {
-    try {
-      const response = await axios.post("http://localhost:5002/api/search/search", {
-        locality: state.locality,
-        doctorType: state.doctorType,
-        date: state.date,
-      });
+  try {
+    const response = await axios.post("http://34.171.119.126/api/search/search", {
+      locality: state.locality,
+      doctorType: state.doctorType,
+      date: state.date,
+    });
 
       if (response.data.success) {
         setDoctors(response.data.doctors);
@@ -38,8 +37,7 @@ const SearchResults = () => {
   }, [fetchDoctors]);
 
   const handleBookDoctor = async (doctorId, address, startTime) => {
-    const patientName = localStorage.getItem("patient_name"); // Fetch patient name from localStorage
-
+    const patientName = localStorage.getItem("patient_name"); 
     if (!patientName) {
       alert("Patient name is missing. Please log in again.");
       return;
@@ -51,15 +49,16 @@ const SearchResults = () => {
       address: address,
       start_time: startTime,
     });
-
     try {
-      const response = await axios.post("http://localhost:5002/api/booking/book", {
-        doctor_id: doctorId,
-        patient_name: patientName, // Include patient name in the request
-        address: address,
-        start_time: startTime,
-      });
-
+      const response = await axios.post(
+        "http://34.171.119.126/api/booking/book", // Use the correct external IP for location-service
+        {
+          doctor_id: doctorId,
+          patient_name: patientName, // Include patient name in the request
+          address: address,
+          start_time: startTime,
+        }
+      );
       if (response.data.success) {
         alert("Doctor booked successfully!");
         fetchDoctors(); // Refresh updated slot count

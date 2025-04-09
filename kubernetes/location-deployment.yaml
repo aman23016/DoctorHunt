@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: location-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: location
+  template:
+    metadata:
+      labels:
+        app: location  # Ensure this matches the Service label
+    spec:
+      containers:
+        - name: location
+          image: gcr.io/doctorhunt-application-456305/backend-location:latest
+
+
+          env:
+            - name: DB_HOST
+              value: "mysql-service"  # This matches the MySQL service name
+            - name: DB_USER
+              value: "root"
+            - name: DB_PASSWORD
+              value: "yourpassword"  # Hardcoded password
+            - name: DB_NAME
+              value: "doctorhunt"  # Database name
+          ports:
+            - containerPort: 5002  # The port the microservice listens on

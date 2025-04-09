@@ -5,65 +5,60 @@ services:
     ports:
       - "5001:5001"
     environment:
-      - DB_HOST=db
+      - DB_HOST=mysql-service  # Use mysql-service as the hostname
       - DB_USER=root
       - DB_PASSWORD=yourpassword
       - DB_NAME=doctorhunt
     depends_on:
-      - db
+      - mysql-service  # Ensure db service is ready before starting
 
   patient-authentication:
     build: ./PatientAuthenticationMicroservice
     ports:
       - "5004:5004"
     environment:
-      - DB_HOST=db
+      - DB_HOST=mysql-service  # Use mysql-service as the hostname
       - DB_USER=root
       - DB_PASSWORD=yourpassword
       - DB_NAME=doctorhunt
     depends_on:
-      - db
+      - mysql-service  # Ensure db service is ready before starting
 
   appointment-management:
     build: ./AppointmentManagementMicroservice
     ports:
       - "5003:5003"
     environment:
-      - DB_HOST=db
+      - DB_HOST=mysql-service  # Use mysql-service as the hostname
       - DB_USER=root
       - DB_PASSWORD=yourpassword
       - DB_NAME=doctorhunt
     depends_on:
-      - db
+      - mysql-service  # Ensure db service is ready before starting
 
   location:
     build: ./LocationMicroservice
     ports:
-      - "5002"
+      - "5002:5002"
     environment:
-      - DB_HOST=db
+      - DB_HOST=mysql-service  # Use mysql-service as the hostname
       - DB_USER=root
       - DB_PASSWORD=yourpassword
       - DB_NAME=doctorhunt
     depends_on:
-      - db
-    deploy:
-      replicas: 4  # This scales the location microservice to 4 replicas
+      - mysql-service  # Ensure db service is ready before starting
 
-  db:
+  mysql-service:
     image: mysql:5.7
+    container_name: mysql-service  # Set container name to mysql-service
     environment:
       MYSQL_ROOT_PASSWORD: yourpassword
       MYSQL_DATABASE: doctorhunt
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - db-data:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/my.cnf
 
 volumes:
   db-data:
-
-
-##command to run the docker-compose.yml file: docker-compose up --build --scale location=4 -d
-##this is runnig the docker-compose file in detached mode and scaling the location microservice to 4 replicas
-

@@ -1,20 +1,20 @@
-# Step 1: Use an official Node.js runtime as a base image
+# Use official Node.js base image
 FROM node:16
 
-# Step 2: Set the working directory inside the container
+# Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Step 3: Copy the package.json and package-lock.json files
+# Copy package.json and package-lock.json first (to leverage Docker caching)
 COPY package*.json ./
 
-# Step 4: Install dependencies
+# Install application dependencies
 RUN npm install
 
-# Step 5: Copy the rest of the application code
+# Now copy all application code (including Config folder, server.js, etc.)
 COPY . .
 
-# Step 6: Expose the port on which the service will run
+# Expose the port your app will run on (port 5001)
 EXPOSE 5001
 
-# Step 7: Run the application
+# Command to start your application (ensure the "start" script exists in package.json)
 CMD ["npm", "start"]

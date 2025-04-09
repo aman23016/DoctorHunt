@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+spec:
+  replicas: 4  # Define the number of replicas for scalability
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: gcr.io/doctorhunt-application-456305/frontend:latest  # Update this with your project ID
+        ports:
+        - containerPort: 80  # Expose port 80 for the frontend

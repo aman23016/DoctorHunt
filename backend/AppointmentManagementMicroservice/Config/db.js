@@ -1,44 +1,29 @@
-// const mysql = require("mysql2");
+const mysql = require('mysql2/promise');
 
-// // Create a connection to the database with promise support
-// const db = mysql.createConnection({
-//     host: "localhost",
-//     user: "root",
-//     password: "yourpassword", // Replace with your MySQL password
-//     database: "doctorhunt"
-// });
-
-// // Use promise() for promise-based queries
-// db.promise();
-
-// db.connect(err => {
-//     if (err) {
-//         console.error("Database connection failed:", err);
-//     } else {
-//         console.log("Connected to MySQL Database!");
-//     }
-// });
-
-// module.exports = db; // Export the connection
-const mysql = require("mysql2");
-
-// Create a connection to the database with promise support
-const db = mysql.createConnection({
-    host: "db", // Use the service name from docker-compose (it refers to the MySQL container)
-    user: "root",
-    password: "yourpassword", // Make sure to set this in docker-compose.yml
-    database: "doctorhunt"
+// Create a connection pool (instead of creating a single connection)
+const pool = mysql.createPool({
+  host: 'mysql-service',  // Kubernetes service name for MySQL (use 'mysql-service')
+  user: 'root',  // MySQL user
+  password: 'yourpassword',  // Hardcoded password
+  database: 'doctorhunt',  // Database name
+  waitForConnections: true,  // Wait for a connection to become available if all connections are in use
+  connectionLimit: 20,  // Maximum number of connections in the pool
+  queueLimit: 0  // No limit on queued connections
 });
 
-// Use promise() for promise-based queries
-db.promise();
+// Create a function to handle the query execution (similar to the previous `db.connect()` structure)
+const connectDb = async () => {
+  try {
+    // Try to get a connection from the pool
+    const connection = await pool.getConnection();
+    console.log("Connected to MySQL Database!");
+    connection.release();  // Release the connection back to the pool after use
+  } catch (err) {
+    console.error("Database connection failed:", err);
+  }
+};
 
-db.connect(err => {
-    if (err) {
-        console.error("Database connection failed:", err);
-    } else {
-        console.log("Connected to MySQL Database!");
-    }
-});
+// Connect to the database once when the service starts
+connectDb();
 
-module.exports = db; // Export the connection
+module.exports = pool;  // Export the connection pool

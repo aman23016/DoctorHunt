@@ -12,14 +12,21 @@ const PatientSignup = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    // try {
+    //   const response = await axios.post("http://localhost:5004/api/patients/signup", {
+    //     name,
+    //     age,
+    //     phone,
+    //     password
+    //   });
     try {
-      const response = await axios.post("http://localhost:5004/api/patients/signup", {
+      const response = await axios.post("http://34.69.20.136/api/patients/signup", {
         name,
         age,
         phone,
         password
       });
-
+    
       if (response.data.success) {
         alert("Signup successful! Please login.");
         navigate("/patient-login"); // Redirect to login page

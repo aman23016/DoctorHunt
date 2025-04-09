@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appointment-management-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: appointment-management
+  template:
+    metadata:
+      labels:
+        app: appointment-management  # Ensure this matches the Service label
+    spec:
+      containers:
+        - name: appointment-management
+          image: gcr.io/doctorhunt-application-456305/backend-appointment-management:latest
+
+
+          env:
+            - name: DB_HOST
+              value: "mysql-service"  # This matches the MySQL service name
+            - name: DB_USER
+              value: "root"
+            - name: DB_PASSWORD
+              value: "yourpassword"  # Hardcoded password
+            - name: DB_NAME
+              value: "doctorhunt"  # Database name
+          ports:
+            - containerPort: 5003  # The port the microservice listens on

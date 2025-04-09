@@ -8,7 +8,7 @@ router.post("/login", async (req, res) => {
 
   try {
     const query = "SELECT * FROM doctor_login WHERE mobile_no = ?";
-    const [results] = await db.promise().query(query, [phone]);
+    const [results] = await db.query(query, [phone]);
 
     if (results.length === 0) {
       return res.status(400).json({ success: false, message: "Invalid phone number or password" });

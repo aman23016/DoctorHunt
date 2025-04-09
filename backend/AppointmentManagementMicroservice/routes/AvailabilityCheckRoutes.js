@@ -13,7 +13,7 @@ router.post("/check-bookings", async (req, res) => {
     `;
   
     try {
-      const [results] = await db.promise().query(query, [doctor_id]);
+      const [results] = await db.query(query, [doctor_id]);
 
       if (results.length > 0) {
         return res.json({ success: true, bookings: results });

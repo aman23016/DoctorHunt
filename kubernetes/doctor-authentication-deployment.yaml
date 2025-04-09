@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: doctor-authentication-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: doctor-authentication
+  template:
+    metadata:
+      labels:
+        app: doctor-authentication
+    spec:
+      containers:
+        - name: doctor-authentication
+          image: gcr.io/doctorhunt-application-456305/backend-doctor-authentication:latest
+
+
+          env:
+            - name: DB_HOST
+              value: "mysql-service"  # This matches the MySQL service name
+            - name: DB_USER
+              value: "root"
+            - name: DB_PASSWORD
+              value: "yourpassword"  # Hardcoded password
+            - name: DB_NAME
+              value: "doctorhunt"  # Database name
+          ports:
+            - containerPort: 5001  # The port the microservice listens on

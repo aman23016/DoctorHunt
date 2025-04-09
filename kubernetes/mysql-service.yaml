@@ -1,0 +1,19 @@
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: mysql-service  # The service name for MySQL (which will be used in db.js)
+# spec:
+#   ports:
+#     - port: 3306  # MySQL port
+#   selector:
+#     app: mysql  # Match the label for the MySQL pod
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    app: mysql
