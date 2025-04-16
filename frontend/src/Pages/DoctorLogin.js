@@ -16,12 +16,7 @@ const DoctorLogin = () => {
       return;
     }
 
-    // try {
-     
-    //   const response = await axios.post("http://localhost:5001/api/doctor/login", {
-    //     phone,
-    //     password
-    //   });
+
     try {
       const response = await axios.post(
         "http://34.60.223.171/api/doctor/login",  // Replaced with the external IP

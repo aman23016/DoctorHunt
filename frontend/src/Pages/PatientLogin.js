@@ -90,12 +90,6 @@ const PatientLogin = () => {
       return;
     }
   
-    // try {
-    //   const response = await axios.post("http://localhost:5004/api/patients/login", {
-    //     phone,
-    //     password,
-    //   });
-  
     try {
       const response = await axios.post("http://34.69.20.136/api/patients/login", {
         phone,
