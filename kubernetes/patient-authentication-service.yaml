@@ -1,12 +1,27 @@
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: patient-authentication-service
+# spec:
+#   selector:
+#     app: patient-authentication  # This matches the label of the patient-authentication pod
+#   ports:
+#     - protocol: TCP
+#       port: 80  # Expose externally on port 80
+#       targetPort: 5004  # Map to the internal port 5004 in the container
+#   type: LoadBalancer  # Useful for cloud environments
 apiVersion: v1
 kind: Service
 metadata:
   name: patient-authentication-service
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '80'       # Service port (not targetPort)
+    prometheus.io/path: '/metrics' # Metrics endpoint
 spec:
   selector:
-    app: patient-authentication  # This matches the label of the patient-authentication pod
+    app: patient-authentication
   ports:
-    - protocol: TCP
-      port: 80  # Expose externally on port 80
-      targetPort: 5004  # Map to the internal port 5004 in the container
-  type: LoadBalancer  # Useful for cloud environments
+    - port: 80          # Service port
+      targetPort: 5004  # Pod port
+  type: LoadBalancer

@@ -1,12 +1,27 @@
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: doctor-authentication-service
+# spec:
+#   selector:
+#     app: doctor-authentication
+#   ports:
+#     - protocol: TCP
+#       port: 80  # Expose externally on port 80
+#       targetPort: 5001  # Map to the internal port 5001 in the container
+#   type: LoadBalancer  # Useful for cloud environments
 apiVersion: v1
 kind: Service
 metadata:
-  name: doctor-authentication-service
+  name: doctor-authentication-service  # Update service name
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '80'       # Service port (not targetPort)
+    prometheus.io/path: '/metrics'
 spec:
   selector:
     app: doctor-authentication
   ports:
-    - protocol: TCP
-      port: 80  # Expose externally on port 80
-      targetPort: 5001  # Map to the internal port 5001 in the container
-  type: LoadBalancer  # Useful for cloud environments
+    - port: 80
+      targetPort: 5001  # Pod port
+  type: LoadBalancer

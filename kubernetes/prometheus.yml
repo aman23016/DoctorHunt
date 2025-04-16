@@ -1,0 +1,173 @@
+# global:
+#   scrape_interval: 15s
+
+# scrape_configs:
+#   # Appointment Management Service
+#   - job_name: 'appointment-management'
+#     kubernetes_sd_configs:
+#       - role: service
+#     relabel_configs:
+#       # Keep only services with the scrape annotation
+#       - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
+#         action: keep
+#         regex: "true"
+#       # Filter by service name
+#       - source_labels: [__meta_kubernetes_service_name]
+#         regex: appointment-management-service
+#         action: keep
+#       # Set metrics path from annotation
+#       - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+#         target_label: __metrics_path__
+#       # Construct FQDN for address (service.namespace.svc:port)
+#       - source_labels: [__meta_kubernetes_service_name, __meta_kubernetes_namespace, __meta_kubernetes_service_port_number]
+#         separator: .
+#         target_label: __address__
+#         replacement: $1.$2.svc.cluster.local:$3
+
+#   # Doctor Authentication Service
+#   - job_name: 'doctor-authentication'
+#     kubernetes_sd_configs:
+#       - role: service
+#     relabel_configs:
+#       - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
+#         action: keep
+#         regex: "true"
+#       - source_labels: [__meta_kubernetes_service_name]
+#         regex: doctor-authentication-service  # Update with actual service name
+#         action: keep
+#       - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+#         target_label: __metrics_path__
+#       - source_labels: [__meta_kubernetes_service_name, __meta_kubernetes_namespace, __meta_kubernetes_service_port_number]
+#         separator: .
+#         target_label: __address__
+#         replacement: $1.$2.svc.cluster.local:$3
+
+#   # Patient Authentication Service
+#   - job_name: 'patient-authentication'
+#     kubernetes_sd_configs:
+#       - role: service
+#     relabel_configs:
+#       - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
+#         action: keep
+#         regex: "true"
+#       - source_labels: [__meta_kubernetes_service_name]
+#         regex: patient-authentication-service  # Update with actual service name
+#         action: keep
+#       - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+#         target_label: __metrics_path__
+#       - source_labels: [__meta_kubernetes_service_name, __meta_kubernetes_namespace, __meta_kubernetes_service_port_number]
+#         separator: .
+#         target_label: __address__
+#         replacement: $1.$2.svc.cluster.local:$3
+
+#   # Location Service
+#   - job_name: 'location'
+#     kubernetes_sd_configs:
+#       - role: service
+#     relabel_configs:
+#       - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
+#         action: keep
+#         regex: "true"
+#       - source_labels: [__meta_kubernetes_service_name]
+#         regex: location-service  # Update with actual service name
+#         action: keep
+#       - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+#         target_label: __metrics_path__
+#       - source_labels: [__meta_kubernetes_service_name, __meta_kubernetes_namespace, __meta_kubernetes_service_port_number]
+#         separator: .
+#         target_label: __address__
+#         replacement: $1.$2.svc.cluster.local:$3
+
+
+
+
+
+
+global:
+  scrape_interval: 10s
+
+scrape_configs:
+  - job_name: 'doctor-authentication'
+    kubernetes_sd_configs:
+      - role: service
+    relabel_configs:
+      # Keep services with scrape=true annotation
+      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
+        action: keep
+        regex: "true"
+      
+      # Filter by service name
+      - source_labels: [__meta_kubernetes_service_name]
+        regex: doctor-authentication-service
+        action: keep
+      
+      # Set metrics path from annotation
+      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+        target_label: __metrics_path__
+      
+      # Build FQDN and port: <service>.<namespace>.svc.cluster.local:<port>
+      - source_labels:
+          [__meta_kubernetes_service_name, __meta_kubernetes_namespace, __meta_kubernetes_service_annotation_prometheus_io_port]
+        separator: .
+        regex: "(.*)\\.(.*)\\.(.*)"  # Split into service ($1), namespace ($2), port ($3)
+        replacement: "$1.$2.svc.cluster.local:$3"  # Correct FQDN + port
+        target_label: __address__
+  # Appointment Management Service
+  - job_name: 'appointment-management'
+    kubernetes_sd_configs:
+      - role: service
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
+        action: keep
+        regex: "true"
+      - source_labels: [__meta_kubernetes_service_name]
+        regex: appointment-management-service  # Match exact service name
+        action: keep
+      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+        target_label: __metrics_path__
+      - source_labels:
+          [__meta_kubernetes_service_name, __meta_kubernetes_namespace, __meta_kubernetes_service_annotation_prometheus_io_port]
+        separator: .
+        regex: "(.*)\\.(.*)\\.(.*)"
+        replacement: "$1.$2.svc.cluster.local:$3"  # Correct FQDN + port
+        target_label: __address__
+
+  # Patient Authentication Service
+  - job_name: 'patient-authentication'
+    kubernetes_sd_configs:
+      - role: service
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
+        action: keep
+        regex: "true"
+      - source_labels: [__meta_kubernetes_service_name]
+        regex: patient-authentication-service  # Match exact service name
+        action: keep
+      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+        target_label: __metrics_path__
+      - source_labels:
+          [__meta_kubernetes_service_name, __meta_kubernetes_namespace, __meta_kubernetes_service_annotation_prometheus_io_port]
+        separator: .
+        regex: "(.*)\\.(.*)\\.(.*)"
+        replacement: "$1.$2.svc.cluster.local:$3"  # Correct FQDN + port
+        target_label: __address__
+
+  # Location Service
+  - job_name: 'location'
+    kubernetes_sd_configs:
+      - role: service
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
+        action: keep
+        regex: "true"
+      - source_labels: [__meta_kubernetes_service_name]
+        regex: location-service  # Match exact service name
+        action: keep
+      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+        target_label: __metrics_path__
+      - source_labels:
+          [__meta_kubernetes_service_name, __meta_kubernetes_namespace, __meta_kubernetes_service_annotation_prometheus_io_port]
+        separator: .
+        regex: "(.*)\\.(.*)\\.(.*)"
+        replacement: "$1.$2.svc.cluster.local:$3"  # Correct FQDN + port
+        target_label: __address__

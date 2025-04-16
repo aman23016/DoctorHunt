@@ -142,7 +142,10 @@ const PatientLogin = () => {
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
-        <p>New here? <a href="/patient-signup">Sign up</a></p>
+        <p>
+          New here?{" "}
+          <button onClick={() => navigate("/patient-signup")}>Sign up</button>
+        </p>
       </div>
     </div>
   );

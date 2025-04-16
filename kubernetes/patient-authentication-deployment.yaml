@@ -10,21 +10,20 @@ spec:
   template:
     metadata:
       labels:
-        app: patient-authentication  # Ensure this matches the Service label
+        app: patient-authentication
     spec:
       containers:
         - name: patient-authentication
-          image: gcr.io/doctorhunt-application-456305/backend-patient-authentication:latest
-
+          image: gcr.io/doctorhunt-application-456305/patient-authentication:latest  # Correct image name
 
           env:
             - name: DB_HOST
-              value: "mysql-service"  # This matches the MySQL service name
+              value: "mysql-service"
             - name: DB_USER
               value: "root"
             - name: DB_PASSWORD
-              value: "yourpassword"  # Hardcoded password
+              value: "yourpassword"
             - name: DB_NAME
-              value: "doctorhunt"  # Database name
+              value: "doctorhunt"
           ports:
-            - containerPort: 5004  # The port the microservice listens on
+            - containerPort: 5004

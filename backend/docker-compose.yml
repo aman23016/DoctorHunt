@@ -1,56 +1,125 @@
+# version: '3'
+# services:
+#   doctor-authentication:
+#     build: ./DoctorAuthenticationMicroservice
+#     ports:
+#       - "5001:5001"
+#     environment:
+#       - DB_HOST=mysql-service  # Use mysql-service as the hostname
+#       - DB_USER=root
+#       - DB_PASSWORD=yourpassword
+#       - DB_NAME=doctorhunt
+#     depends_on:
+#       - mysql-service  # Ensure db service is ready before starting
+
+#   patient-authentication:
+#     build: ./PatientAuthenticationMicroservice
+#     ports:
+#       - "5004:5004"
+#     environment:
+#       - DB_HOST=mysql-service  # Use mysql-service as the hostname
+#       - DB_USER=root
+#       - DB_PASSWORD=yourpassword
+#       - DB_NAME=doctorhunt
+#     depends_on:
+#       - mysql-service  # Ensure db service is ready before starting
+
+#   appointment-management:
+#     build: ./AppointmentManagementMicroservice
+#     ports:
+#       - "5003:5003"
+#     environment:
+#       - DB_HOST=mysql-service  # Use mysql-service as the hostname
+#       - DB_USER=root
+#       - DB_PASSWORD=yourpassword
+#       - DB_NAME=doctorhunt
+#     depends_on:
+#       - mysql-service  # Ensure db service is ready before starting
+
+#   location:
+#     build: ./LocationMicroservice
+#     ports:
+#       - "5002:5002"
+#     environment:
+#       - DB_HOST=mysql-service  # Use mysql-service as the hostname
+#       - DB_USER=root
+#       - DB_PASSWORD=yourpassword
+#       - DB_NAME=doctorhunt
+#     depends_on:
+#       - mysql-service  # Ensure db service is ready before starting
+
+#   mysql-service:
+#     image: mysql:5.7
+#     container_name: mysql-service  # Set container name to mysql-service
+#     environment:
+#       MYSQL_ROOT_PASSWORD: yourpassword
+#       MYSQL_DATABASE: doctorhunt
+#     ports:
+#       - "3307:3306"
+#     volumes:
+#       - db-data:/var/lib/mysql
+#       - ./my.cnf:/etc/mysql/my.cnf
+
+# volumes:
+#   db-data:
 version: '3'
+
 services:
   doctor-authentication:
     build: ./DoctorAuthenticationMicroservice
+    image: gcr.io/doctorhunt-application-456305/doctor-authentication:latest  # Add image tag
     ports:
       - "5001:5001"
     environment:
-      - DB_HOST=mysql-service  # Use mysql-service as the hostname
+      - DB_HOST=mysql-service
       - DB_USER=root
       - DB_PASSWORD=yourpassword
       - DB_NAME=doctorhunt
     depends_on:
-      - mysql-service  # Ensure db service is ready before starting
+      - mysql-service
 
   patient-authentication:
     build: ./PatientAuthenticationMicroservice
+    image: gcr.io/doctorhunt-application-456305/patient-authentication:latest  # Add image tag
     ports:
       - "5004:5004"
     environment:
-      - DB_HOST=mysql-service  # Use mysql-service as the hostname
+      - DB_HOST=mysql-service
       - DB_USER=root
       - DB_PASSWORD=yourpassword
       - DB_NAME=doctorhunt
     depends_on:
-      - mysql-service  # Ensure db service is ready before starting
+      - mysql-service
 
   appointment-management:
     build: ./AppointmentManagementMicroservice
+    image: gcr.io/doctorhunt-application-456305/appointment-management:latest  # Add image tag
     ports:
       - "5003:5003"
     environment:
-      - DB_HOST=mysql-service  # Use mysql-service as the hostname
+      - DB_HOST=mysql-service
       - DB_USER=root
       - DB_PASSWORD=yourpassword
       - DB_NAME=doctorhunt
     depends_on:
-      - mysql-service  # Ensure db service is ready before starting
+      - mysql-service
 
   location:
     build: ./LocationMicroservice
+    image: gcr.io/doctorhunt-application-456305/location-service:latest  # Add image tag
     ports:
       - "5002:5002"
     environment:
-      - DB_HOST=mysql-service  # Use mysql-service as the hostname
+      - DB_HOST=mysql-service
       - DB_USER=root
       - DB_PASSWORD=yourpassword
       - DB_NAME=doctorhunt
     depends_on:
-      - mysql-service  # Ensure db service is ready before starting
+      - mysql-service
 
   mysql-service:
     image: mysql:5.7
-    container_name: mysql-service  # Set container name to mysql-service
+    container_name: mysql-service
     environment:
       MYSQL_ROOT_PASSWORD: yourpassword
       MYSQL_DATABASE: doctorhunt
